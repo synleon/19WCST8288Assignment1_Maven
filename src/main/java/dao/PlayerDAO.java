@@ -2,7 +2,7 @@ package dao;
 
 import entity.Player;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,13 +25,13 @@ public class PlayerDAO extends GenericDAO<Player>{
 
     public List<Player> findByFirstName(String firstname) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("firstname", firstname);
+        parameters.put("firstName", firstname);
         return findResults("Player.findByFirstName", parameters);
     }
 
     public List<Player> findByLastName(String lastname) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("lastname", lastname);
+        parameters.put("lastName", lastname);
         return findResults("Player.findByLastName", parameters);
     }
 
