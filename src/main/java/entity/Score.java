@@ -61,6 +61,13 @@ public class Score implements Serializable {
         this.submission = submission;
     }
 
+    public Score(Integer id, int score, Date submission, Player playerid) {
+        this.id = id;
+        this.score = score;
+        this.submission = submission;
+        this.playerid = playerid;
+    }
+
     public Integer getId() {
         return id;
     }

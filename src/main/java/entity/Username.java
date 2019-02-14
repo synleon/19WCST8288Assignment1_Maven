@@ -48,6 +48,12 @@ public class Username implements Serializable {
         this.username = username;
     }
 
+    public Username(Integer playerid, String username, Player player) {
+        this.playerid = playerid;
+        this.username = username;
+        this.player = player;
+    }
+
     public Integer getPlayerid() {
         return playerid;
     }
