@@ -49,9 +49,9 @@ public class Player implements Serializable {
     private Date joined;
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playerid", fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.DETACH}, mappedBy = "playerid", fetch = FetchType.LAZY)
     private List<Score> scoreList;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "player", fetch = FetchType.EAGER)
+    @OneToOne(cascade = {CascadeType.REMOVE, CascadeType.MERGE, CascadeType.DETACH}, mappedBy = "player", fetch = FetchType.EAGER)
     private Username username;
 
     public Player() {

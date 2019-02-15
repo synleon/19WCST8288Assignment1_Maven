@@ -4,7 +4,11 @@ import dao.PlayerDAO;
 import entity.Player;
 import javafx.print.PageLayout;
 
+import javax.xml.bind.annotation.XmlType;
 import java.sql.Date;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -61,8 +65,17 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
         }
         player.setFirstName(parameterMap.get(FIRST_NAME)[0]);
         player.setLastName(parameterMap.get(LAST_NAME)[0]);
-        player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
-        player.setEmail(parameterMap.get(EMAIL)[0]);
+        if (parameterMap.containsKey(JOINED)) {
+            player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
+        }
+        else {
+            player.setJoined(Date.from(Instant.now(Clock.system(ZoneId.systemDefault()))));
+        }
+
+        if (parameterMap.containsKey(EMAIL)) {
+            player.setEmail(parameterMap.get(EMAIL)[0]);
+        }
+
         return player;
     }
 }

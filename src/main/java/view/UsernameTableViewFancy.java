@@ -47,7 +47,7 @@ public class UsernameTableViewFancy extends HttpServlet {
             out.println("input.update{width: 100%;}");
             out.println("</style>");
             out.println("<script>");
-            out.println("var isEditActive = false;");
+        out.println("var isEditActive = false;");
             out.println("var activeEditID = -1;");
             out.println("function createTextInput(text, name) {");
             out.println("var node = document.createElement(\"input\");");
