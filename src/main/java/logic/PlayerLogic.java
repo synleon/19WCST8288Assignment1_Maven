@@ -60,22 +60,18 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
     @Override
     protected Player createEntity(Map<String, String[]> parameterMap ) {
         Player player = new Player();
-        if(parameterMap.containsKey(ID)){
-            player.setId(Integer.valueOf(parameterMap.get(ID)[0]));
-        }
-        player.setFirstName(parameterMap.get(FIRST_NAME)[0]);
-        player.setLastName(parameterMap.get(LAST_NAME)[0]);
         if (parameterMap.containsKey(JOINED)) {
             player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
         }
         else {
             player.setJoined(Date.from(Instant.now(Clock.system(ZoneId.systemDefault()))));
         }
-
+        player.setId(Integer.valueOf(parameterMap.get(ID)[0]));
+        player.setFirstName(parameterMap.get(FIRST_NAME)[0]);
+        player.setLastName(parameterMap.get(LAST_NAME)[0]);
         if (parameterMap.containsKey(EMAIL)) {
             player.setEmail(parameterMap.get(EMAIL)[0]);
         }
-
         return player;
     }
 }
