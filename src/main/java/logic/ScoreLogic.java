@@ -5,6 +5,8 @@ import entity.Score;
 import org.omg.CORBA.INTERNAL;
 
 import java.sql.Date;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.Map;
 
 public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
@@ -21,11 +23,9 @@ public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
     @Override
     protected Score createEntity(Map<String, String[]> parameterMap) {
         Score score = new Score();
-        if (parameterMap.containsKey(ID)) {
-            score.setId(Integer.valueOf(parameterMap.get(ID)[0]));
-        }
+
         score.setScore(Integer.valueOf(parameterMap.get(SCORE)[0]));
-        score.setSubmission(Date.valueOf(parameterMap.get(SUBMISSION)[0]));
+        score.setSubmission(Date.from(Instant.now(Clock.systemDefaultZone())));
 
         return score;
     }

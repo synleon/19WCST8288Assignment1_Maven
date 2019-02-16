@@ -64,7 +64,7 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
             player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
         }
         else {
-            player.setJoined(Date.from(Instant.now(Clock.system(ZoneId.systemDefault()))));
+            player.setJoined(Date.from(Instant.now(Clock.systemDefaultZone())));
         }
         player.setId(Integer.valueOf(parameterMap.get(ID)[0]));
         player.setFirstName(parameterMap.get(FIRST_NAME)[0]);
