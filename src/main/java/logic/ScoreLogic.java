@@ -21,7 +21,7 @@ public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
     }
 
     @Override
-    protected Score createEntity(Map<String, String[]> parameterMap) {
+    public Score createEntity(Map<String, String[]> parameterMap) {
         Score score = new Score();
 
         score.setScore(Integer.valueOf(parameterMap.get(SCORE)[0]));

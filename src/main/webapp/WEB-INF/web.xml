@@ -23,6 +23,14 @@
         <servlet-name>UsernameTableViewFancyJSP</servlet-name>
         <jsp-file>/jsp/UsernameTableViewFancy.jsp</jsp-file>
     </servlet>
+    <servlet>
+        <servlet-name>CreatePlayer</servlet-name>
+        <servlet-class>view.CreatePlayer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PlayerTableViewFancy</servlet-name>
+        <servlet-class>view.PlayerTableViewFancy</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SampleForm</servlet-name>
         <url-pattern>/SampleForm</url-pattern>
@@ -38,6 +46,14 @@
     <servlet-mapping>
         <servlet-name>UsernameTableViewFancyJSP</servlet-name>
         <url-pattern>/UsernameTableViewFancyJSP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PlayerTableViewFancy</servlet-name>
+        <url-pattern>/PlayerTableViewFancy</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatePlayer</servlet-name>
+        <url-pattern>/CreatePlayer</url-pattern>
     </servlet-mapping>
 
 </web-app>

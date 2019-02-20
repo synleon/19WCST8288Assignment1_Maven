@@ -67,6 +67,7 @@ public class SampleForm extends HttpServlet {
         return builder.toString();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Map<String, String[]> params =  request.getParameterMap();
         processRequest(request, response);
     }
 

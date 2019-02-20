@@ -58,7 +58,7 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
     }
 
     @Override
-    protected Player createEntity(Map<String, String[]> parameterMap ) {
+    public Player createEntity(Map<String, String[]> parameterMap ) {
         Player player = new Player();
         if (parameterMap.containsKey(JOINED)) {
             player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
