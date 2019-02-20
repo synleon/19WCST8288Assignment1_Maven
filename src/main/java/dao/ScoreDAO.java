@@ -16,6 +16,7 @@ import java.util.Map;
         , @NamedQuery(name = "Score.findByPlayerID", query = "SELECT s FROM Score s WHERE s.playerid.id = :lpayerid")})
         */
 public class ScoreDAO extends GenericDAO<Score> {
+
     public ScoreDAO() {
         super(Score.class);
     }

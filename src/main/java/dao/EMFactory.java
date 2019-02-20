@@ -4,11 +4,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 import java.util.Objects;
 
-@javax.servlet.annotation.WebListener()
+@WebListener()
 public class EMFactory implements ServletContextListener,
         HttpSessionListener, HttpSessionAttributeListener {
 

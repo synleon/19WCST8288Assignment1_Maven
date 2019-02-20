@@ -15,11 +15,11 @@ import java.util.function.Supplier;
 
 public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
 
-    public String FIRST_NAME = "firstName";
-    public String LAST_NAME = "lastName";
-    public String JOINED = "joined";
-    public String EMAIL = "email";
-    public String ID = "id";
+    public static String FIRST_NAME = "firstName";
+    public static String LAST_NAME = "lastName";
+    public static String JOINED = "joined";
+    public static String EMAIL = "email";
+    public static String ID = "id";
 
     public PlayerLogic() {
         super(new PlayerDAO());

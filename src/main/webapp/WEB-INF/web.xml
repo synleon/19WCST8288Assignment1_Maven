@@ -31,6 +31,14 @@
         <servlet-name>PlayerTableViewFancy</servlet-name>
         <servlet-class>view.PlayerTableViewFancy</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreateScore</servlet-name>
+        <servlet-class>view.CreateScore</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ScoreTableViewFancy</servlet-name>
+        <servlet-class>view.ScoreTableViewFancy</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SampleForm</servlet-name>
         <url-pattern>/SampleForm</url-pattern>
@@ -54,6 +62,14 @@
     <servlet-mapping>
         <servlet-name>CreatePlayer</servlet-name>
         <url-pattern>/CreatePlayer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateScore</servlet-name>
+        <url-pattern>/CreateScore</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ScoreTableViewFancy</servlet-name>
+        <url-pattern>/ScoreTableViewFancy</url-pattern>
     </servlet-mapping>
 
 </web-app>
