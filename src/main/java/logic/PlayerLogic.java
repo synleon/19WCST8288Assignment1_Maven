@@ -41,6 +41,24 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
         return get(() -> dao().findById(id));
     }
 
+    public void deletePlayerWithID(int id) {
+        Player player = getPlayerWithId(id);
+        delete(player);
+    }
+
+    /**
+     * update player identified by id with new information
+     * @param parameterMap the id of the player entity needs to be updated
+     */
+    public void updatePlayerWithID(Map<String, String[]> parameterMap) {
+        Player player = getPlayerWithId(Integer.valueOf(parameterMap.get(ID)[0]));
+        player.setFirstName(parameterMap.get(FIRST_NAME)[0]);
+        player.setLastName(parameterMap.get(LAST_NAME)[0]);
+        player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
+        player.setEmail(parameterMap.get(EMAIL)[0]);
+        update(player);
+    }
+
     public List<Player> getPlayerWithFirstName(String firstName) {
         return get(() -> dao().findByFirstName(firstName));
     }
@@ -58,7 +76,7 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
     }
 
     @Override
-    public Player createEntity(Map<String, String[]> parameterMap ) {
+    public Player createEntity(Map<String, String[]> parameterMap) {
         Player player = new Player();
         if (parameterMap.containsKey(JOINED)) {
             player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));

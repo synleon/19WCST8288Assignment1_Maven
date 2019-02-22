@@ -11,10 +11,10 @@
         <servlet-name>SampleForm</servlet-name>
         <servlet-class>view.SampleForm</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>UsernameTableViewFancy</servlet-name>
-        <servlet-class>view.UsernameTableViewFancy</servlet-class>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>UsernameTableViewFancy</servlet-name>-->
+        <!--<servlet-class>view.UsernameTableViewFancy</servlet-class>-->
+    <!--</servlet>-->
     <servlet>
         <servlet-name>UsernameTableViewNormal</servlet-name>
         <servlet-class>view.UsernameTableViewNormal</servlet-class>
@@ -27,26 +27,30 @@
         <servlet-name>CreatePlayer</servlet-name>
         <servlet-class>view.CreatePlayer</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>PlayerTableViewFancy</servlet-name>
-        <servlet-class>view.PlayerTableViewFancy</servlet-class>
-    </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>PlayerTableViewFancy</servlet-name>-->
+        <!--<servlet-class>view.PlayerTableViewFancy</servlet-class>-->
+    <!--</servlet>-->
     <servlet>
         <servlet-name>CreateScore</servlet-name>
         <servlet-class>view.CreateScore</servlet-class>
     </servlet>
+    <!--<servlet>-->
+        <!--<servlet-name>ScoreTableViewFancy</servlet-name>-->
+        <!--<servlet-class>view.ScoreTableViewFancy</servlet-class>-->
+    <!--</servlet>-->
     <servlet>
-        <servlet-name>ScoreTableViewFancy</servlet-name>
-        <servlet-class>view.ScoreTableViewFancy</servlet-class>
+        <servlet-name>ViewTables</servlet-name>
+        <servlet-class>view.ViewTables</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SampleForm</servlet-name>
         <url-pattern>/SampleForm</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UsernameTableViewFancy</servlet-name>
-        <url-pattern>/UsernameTableViewFancy</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>UsernameTableViewFancy</servlet-name>-->
+        <!--<url-pattern>/UsernameTableViewFancy</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>UsernameTableViewNormal</servlet-name>
         <url-pattern>/UsernameTableViewNormal</url-pattern>
@@ -55,10 +59,10 @@
         <servlet-name>UsernameTableViewFancyJSP</servlet-name>
         <url-pattern>/UsernameTableViewFancyJSP</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PlayerTableViewFancy</servlet-name>
-        <url-pattern>/PlayerTableViewFancy</url-pattern>
-    </servlet-mapping>
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>PlayerTableViewFancy</servlet-name>-->
+        <!--<url-pattern>/PlayerTableViewFancy</url-pattern>-->
+    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>CreatePlayer</servlet-name>
         <url-pattern>/CreatePlayer</url-pattern>
@@ -68,8 +72,13 @@
         <url-pattern>/CreateScore</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ScoreTableViewFancy</servlet-name>
-        <url-pattern>/ScoreTableViewFancy</url-pattern>
+        <servlet-name>ViewTables</servlet-name>
+        <url-pattern>/ViewPlayer</url-pattern>
+        <url-pattern>/ViewUsername</url-pattern>
+        <url-pattern>/ViewScore</url-pattern>
+        <url-pattern>/PlayerAction</url-pattern>
+        <url-pattern>/UsernameAction</url-pattern>
+        <url-pattern>/ScoreAction</url-pattern>
     </servlet-mapping>
 
 </web-app>

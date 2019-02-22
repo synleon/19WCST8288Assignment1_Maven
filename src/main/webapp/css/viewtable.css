@@ -1,0 +1,62 @@
+form {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    margin-top:20px;
+    padding:auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: auto;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+
+}
+
+th {
+    background-color:lightgrey;
+}
+
+h3 {
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+td.edit {
+    width: 65px;
+}
+
+td.name {
+    width: 350px;
+}
+
+td.code {
+    width: 150px;
+}
+
+td.delete {
+    text-align: center;
+}
+
+input.editor {
+    width: 100%;
+}
+
+input.update {
+    width: 100%;
+}
+
+
+
+
+
