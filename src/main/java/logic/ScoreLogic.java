@@ -12,10 +12,10 @@ import java.util.function.Supplier;
 
 public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
 
-    public static String ID = "scoreid";
-    public static String PLAYER_ID = "id";
-    public static String SCORE = "score";
-    public static String SUBMISSION = "submission";
+    public final static String ID = "scoreid";
+    public final static String PLAYER_ID = "id";
+    public final static String SCORE = "score";
+    public final static String SUBMISSION = "submission";
 
     public ScoreLogic() {
         super(new ScoreDAO());

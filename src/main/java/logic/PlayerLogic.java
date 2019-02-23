@@ -2,24 +2,23 @@ package logic;
 
 import dao.PlayerDAO;
 import entity.Player;
-import javafx.print.PageLayout;
-
-import javax.xml.bind.annotation.XmlType;
 import java.sql.Date;
 import java.time.Clock;
 import java.time.Instant;
-import java.time.ZoneId;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.regex.Pattern;
+
 
 public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
 
-    public static String FIRST_NAME = "firstName";
-    public static String LAST_NAME = "lastName";
-    public static String JOINED = "joined";
-    public static String EMAIL = "email";
-    public static String ID = "id";
+    public final static String FIRST_NAME = "firstName";
+    public final static String LAST_NAME = "lastName";
+    public final static String JOINED = "joined";
+    public final static String EMAIL = "email";
+    public final static String ID = "id";
 
     public PlayerLogic() {
         super(new PlayerDAO());
@@ -76,20 +75,59 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
     }
 
     @Override
-    public Player createEntity(Map<String, String[]> parameterMap) {
-        Player player = new Player();
-        if (parameterMap.containsKey(JOINED)) {
-            player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
+    public Player createEntity(Map<String, String[]> parameterMap) throws IllegalFormParameterException {
+        Map<String, String> errorMessages = new HashMap<>();
+        String playerid = parameterMap.get(ID)[0];
+        String firstName = parameterMap.get(FIRST_NAME)[0];
+        String lastName = parameterMap.get(LAST_NAME)[0];
+        String email = parameterMap.get(EMAIL)[0];
+
+
+        if (playerid == null || playerid.length() == 0) {
+            errorMessages.put("idError", "* id can not be empty!");
         }
-        else {
-            player.setJoined(Date.from(Instant.now(Clock.systemDefaultZone())));
+
+        if (firstName == null || firstName.trim().length() == 0) {
+            errorMessages.put("firstNameError", "* firstName can not be empty!");
         }
-        player.setId(Integer.valueOf(parameterMap.get(ID)[0]));
-        player.setFirstName(parameterMap.get(FIRST_NAME)[0]);
-        player.setLastName(parameterMap.get(LAST_NAME)[0]);
-        if (parameterMap.containsKey(EMAIL)) {
-            player.setEmail(parameterMap.get(EMAIL)[0]);
+
+        if (lastName == null || lastName.trim().length() == 0) {
+            errorMessages.put("lastNameError", "* lastName can not be empty!");
         }
-        return player;
+
+        // valid email format x@x.xx "[a-zA-Z]\w*@\w+.[a-zA-Z]{2,4}"
+        if (email != null && !email.matches("[a-zA-Z]\\w*@\\w+.[a-zA-Z]{2,4}")) {
+            errorMessages.put("emailError", "* email must be in x@x.xx format");
+        }
+
+        if (errorMessages.isEmpty()) {
+            // no error parameter found, let's create the entity
+            Player player = new Player();
+
+            // set date of joined, use default if not specified
+            if (parameterMap.containsKey(JOINED)) {
+                player.setJoined(Date.valueOf(parameterMap.get(JOINED)[0]));
+            }
+            else {
+                player.setJoined(Date.from(Instant.now(Clock.systemDefaultZone())));
+            }
+
+            // set player id
+            player.setId(Integer.valueOf(playerid));
+
+            // set first name
+            player.setFirstName(firstName.trim());
+
+            // set last name
+            player.setLastName(lastName.trim());
+
+            // set email
+            if (email != null) {
+                player.setEmail(email);
+            }
+            return player;
+        } else {
+            throw new IllegalFormParameterException(errorMessages);
+        }
     }
 }

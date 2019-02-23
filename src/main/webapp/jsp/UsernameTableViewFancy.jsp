@@ -5,12 +5,8 @@
   Time: 22:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@page import="java.util.Map" %>
-<%@page import="java.util.Arrays" %>
-<%@page import="java.util.List" %>
-<%@page import="entity.Username" %>
-<%@page import="logic.UsernameLogic" %>
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,9 +42,9 @@
                     this.value = "Update";
                     var idCell = document.getElementById(++id);
                     var nameCell = document.getElementById(++id);
-                    var idInput = createTextInput(idCell.innerText, "<%=UsernameLogic.PLAYER_ID%>");
+                    var idInput = createTextInput(idCell.innerText, "id");
                     idInput.readOnly = true;
-                    var nameInput = createTextInput(nameCell.innerText, "<%=UsernameLogic.USERNAME%>");
+                    var nameInput = createTextInput(nameCell.innerText, "username");
                     idCell.innerText = null;
                     nameCell.innerText = null;
                     idCell.appendChild(idInput);
@@ -75,21 +71,16 @@
             <th>Player ID</th>
             <th>Username</th>
         </tr>
-        <%
-            UsernameLogic logic = new UsernameLogic();
-            List<Username> usernames = logic.getAll();
-            long counter = 0;
-            for (Username username : usernames) {
-        %>
-        <tr>
-            <td class="delete"><input type="checkbox" name="deleteMark" value="<%=username.getPlayerid()%>"/></td>
-            <td class="edit" id="<%=counter++%>"><input class="update" type="button" name="edit" value="Edit"/></td>
-            <td class="name" id="<%=counter++%>"><%=username.getPlayerid()%></td>
-            <td class="name" id="<%=counter++%>"><%=username.getUsername()%></td>
-        </tr>
-        <%
-            }
-        %>
+
+        <c:forEach var="entity" items="${entities}" varStatus="loop">
+            <tr>
+                <td class="delete"><input type="checkbox" name="deleteMark" value="${entity.playerid}"/></td>
+                <td class="edit" id="${loop.index * 3}"><input class="update" type="button" name="edit" value="Edit"/></td>
+                <td class="name" id="${loop.index * 3 + 1}">${entity.playerid}</td>
+                <td class="name" id="${loop.index * 3 + 2}">${entity.username}</td>
+            </tr>
+        </c:forEach>
+
         <tr>
             <th><input type="submit" name="delete" value="Delete"/></th>
             <th>Edit</th>
@@ -98,20 +89,5 @@
         </tr>
     </table>
 </form>
-<div style="text-align: center;">
-    <pre><%=toStringMap(request.getParameterMap())%></pre>
-</div>
 </body>
 </html>
-<%!
-    private String toStringMap(Map<String, String[]> m) {
-        StringBuilder builder = new StringBuilder();
-        for (String k : m.keySet()) {
-            builder.append("Key=").append(k)
-                    .append(", ")
-                    .append("Value/s=").append(Arrays.toString(m.get(k)))
-                    .append(System.lineSeparator());
-        }
-        return builder.toString();
-    }
-%>

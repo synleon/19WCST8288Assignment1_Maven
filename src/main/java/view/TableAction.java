@@ -1,5 +1,6 @@
 package view;
 
+import entity.Player;
 import entity.Score;
 import entity.Username;
 import logic.PlayerLogic;
@@ -92,13 +93,17 @@ public class TableAction extends HttpServlet {
 
     protected void viewPlayers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        PlayerLogic logic = new PlayerLogic();
+        List<Player> entities = logic.getAllPlayers();
+        request.setAttribute("entities", entities);
         request.getRequestDispatcher("/jsp/PlayersTableView.jsp").forward(request, response);
     }
 
     protected void viewUsernames(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        UsernameLogic logic = new UsernameLogic();
+        List<Username> entities = logic.getAll();
+        request.setAttribute("entities", entities);
         request.getRequestDispatcher("/jsp/UsernameTableViewFancy.jsp").forward(request, response);
     }
 

@@ -5,6 +5,7 @@ import entity.Player;
 import entity.Username;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,11 +55,27 @@ public class UsernameLogic extends GenericLogic<Username,UsernameDAO>{
 
     @Override
     public Username createEntity(Map<String, String[]> parameterMap) {
-        Username user = new Username();
-        if(parameterMap.containsKey(PLAYER_ID)){
-            user.setPlayerid(Integer.valueOf(parameterMap.get(PLAYER_ID)[0]));
+        Map<String, String> errorMessages = new HashMap<>();
+        String playerid = parameterMap.get(PlayerLogic.ID)[0];
+        String username = parameterMap.get(USERNAME)[0];
+
+        if (playerid == null || playerid.length() == 0) {
+            errorMessages.put("idError", "* id can not be empty!");
         }
-        user.setUsername(parameterMap.get(USERNAME)[0]);
-        return user;
+
+        if (username == null || username.trim().length() == 0) {
+            errorMessages.put("usernameError", "* username can not be empty!");
+        }
+
+        if (errorMessages.isEmpty()) {
+            // no error parameter found, let's create the entity
+            Username userName = new Username();
+            userName.setPlayerid(Integer.valueOf(playerid));
+            userName.setUsername(username);
+            return userName;
+        }
+        else {
+            throw new IllegalFormParameterException(errorMessages);
+        }
     }
 }
