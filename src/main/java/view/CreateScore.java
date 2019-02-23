@@ -58,7 +58,7 @@ public class CreateScore extends HttpServlet {
             Player player2 = new PlayerLogic().getPlayerWithId(Integer.valueOf(request.getParameter(ScoreLogic.PLAYER_ID)));
             score.setPlayerid(player);
             logic.add(score);
-            request.getRequestDispatcher("ScoreTableViewFancy").forward(request, response);
+            request.getRequestDispatcher("/jsp/ScoresTableView.jsp").forward(request, response);
         }
 
     }

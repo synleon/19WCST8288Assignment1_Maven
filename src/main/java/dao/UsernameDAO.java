@@ -17,7 +17,7 @@ public class UsernameDAO extends GenericDAO<Username> {
 
     public Username findByPlayerID( int playerID){
         Map<String, Object> map = new HashMap<>();
-        map.put("playerId", playerID);
+        map.put("playerid", playerID);
         return findResult( "Username.findByPlayerId", map);
     }
 

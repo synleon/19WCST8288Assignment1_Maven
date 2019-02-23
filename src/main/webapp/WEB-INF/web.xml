@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
-    <!-- use Servlet annotation instead-->
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
@@ -11,10 +10,6 @@
         <servlet-name>SampleForm</servlet-name>
         <servlet-class>view.SampleForm</servlet-class>
     </servlet>
-    <!--<servlet>-->
-        <!--<servlet-name>UsernameTableViewFancy</servlet-name>-->
-        <!--<servlet-class>view.UsernameTableViewFancy</servlet-class>-->
-    <!--</servlet>-->
     <servlet>
         <servlet-name>UsernameTableViewNormal</servlet-name>
         <servlet-class>view.UsernameTableViewNormal</servlet-class>
@@ -27,30 +22,18 @@
         <servlet-name>CreatePlayer</servlet-name>
         <servlet-class>view.CreatePlayer</servlet-class>
     </servlet>
-    <!--<servlet>-->
-        <!--<servlet-name>PlayerTableViewFancy</servlet-name>-->
-        <!--<servlet-class>view.PlayerTableViewFancy</servlet-class>-->
-    <!--</servlet>-->
     <servlet>
         <servlet-name>CreateScore</servlet-name>
         <servlet-class>view.CreateScore</servlet-class>
     </servlet>
-    <!--<servlet>-->
-        <!--<servlet-name>ScoreTableViewFancy</servlet-name>-->
-        <!--<servlet-class>view.ScoreTableViewFancy</servlet-class>-->
-    <!--</servlet>-->
     <servlet>
-        <servlet-name>ViewTables</servlet-name>
-        <servlet-class>view.ViewTables</servlet-class>
+        <servlet-name>TableAction</servlet-name>
+        <servlet-class>view.TableAction</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>SampleForm</servlet-name>
         <url-pattern>/SampleForm</url-pattern>
     </servlet-mapping>
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>UsernameTableViewFancy</servlet-name>-->
-        <!--<url-pattern>/UsernameTableViewFancy</url-pattern>-->
-    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>UsernameTableViewNormal</servlet-name>
         <url-pattern>/UsernameTableViewNormal</url-pattern>
@@ -59,10 +42,6 @@
         <servlet-name>UsernameTableViewFancyJSP</servlet-name>
         <url-pattern>/UsernameTableViewFancyJSP</url-pattern>
     </servlet-mapping>
-    <!--<servlet-mapping>-->
-        <!--<servlet-name>PlayerTableViewFancy</servlet-name>-->
-        <!--<url-pattern>/PlayerTableViewFancy</url-pattern>-->
-    <!--</servlet-mapping>-->
     <servlet-mapping>
         <servlet-name>CreatePlayer</servlet-name>
         <url-pattern>/CreatePlayer</url-pattern>
@@ -72,7 +51,7 @@
         <url-pattern>/CreateScore</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ViewTables</servlet-name>
+        <servlet-name>TableAction</servlet-name>
         <url-pattern>/ViewPlayer</url-pattern>
         <url-pattern>/ViewUsername</url-pattern>
         <url-pattern>/ViewScore</url-pattern>

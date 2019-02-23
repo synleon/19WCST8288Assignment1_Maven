@@ -3,7 +3,7 @@ package logic;
 import dao.ScoreDAO;
 import entity.Score;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.Clock;
 import java.time.Instant;
 import java.util.List;
@@ -50,6 +50,19 @@ public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
 
     public List<Score> getScoresForPlayerID(int playerid) {
         return get(() -> dao().findByPlayerID(playerid));
+    }
+
+    public void deleteScoreWithId(int id) {
+        Score score = getById(id);
+        delete(score);
+    }
+
+    public void updateScoreWithID(Map<String, String[]> parameterMap) {
+        Score score = getById(Integer.valueOf(parameterMap.get(ID)[0]));
+        score.setScore(Integer.valueOf(parameterMap.get(SCORE)[0]));
+        score.setSubmission(Date.from(Instant.now(Clock.systemDefaultZone())));
+
+        update(score);
     }
 
     @Override

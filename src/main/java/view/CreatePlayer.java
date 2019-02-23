@@ -17,56 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CreatePlayer extends HttpServlet {
-    private Map<String, String> errorMessages = new HashMap<>();
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Create a player</title>");
-            out.println("<style> .error {color: #FF0000;} </style>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<div style=\"text-align: center;\">");
-            out.println("<div style=\"display: inline-block; text-align: left;\">");
-            out.println("<h2>Create a Player</h2>");
-            out.println("<form action=\"CreatePlayer\" method=\"post\">");
-            out.println("Player id:<br>");
-            out.println("<input type=\"number\" name=\"id\">");
-            if (errorMessages.containsKey("idError")) {
-                out.println("<span class=\"error\">*" + errorMessages.get("idError") + "</span>");
-            }
-            out.println("<br>First name:<br>");
-            out.println("<input type=\"text\" name=\"firstName\">");
-            if (errorMessages.containsKey("firstNameError")) {
-                out.println("<span class=\"error\">*" + errorMessages.get("firstNameError") + "</span>");
-            }
-            out.println("<br>Last name:<br>");
-            out.println("<input type=\"text\" name=\"lastName\">");
-            if (errorMessages.containsKey("lastNameError")) {
-                out.println("<span class=\"error\">*" + errorMessages.get("lastNameError") + "</span>");
-            }
-            out.println("<br>Email:<br>");
-            out.println("<input type=\"email\" name=\"email\"><br>");
-            out.println("Username:<br>");
-            out.println("<input type=\"text\" name=\"username\">");
-            if (errorMessages.containsKey("userNameError")) {
-                out.println("<span class=\"error\">*" + errorMessages.get("userNameError") + "</span>");
-            }
-            out.println("<br><input type=\"submit\" name=\"add\" value=\"Add and View\">");
-            out.println("</form>");
-            out.println("<pre>");
-            out.println("Submitted keys and values:");
-            // out.println(toStringMap(request.getParameterMap()));
-            out.println("</pre>");
-            out.println("</div>");
-            out.println("</div>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        request.getRequestDispatcher("/jsp/CreatePlayer.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,25 +34,26 @@ public class CreatePlayer extends HttpServlet {
             String email = request.getParameter(PlayerLogic.EMAIL);
             String userName = request.getParameter(UsernameLogic.USERNAME);
 
+            Map<String, String> errorMessages = new HashMap<>();
             errorMessages.clear();
 
             if (id == null || id.trim().length() == 0) {
-                errorMessages.put("idError", "id can not be empty!");
+                errorMessages.put("idError", "*id can not be empty!");
             }
 
             if (firstName == null || firstName.trim().length() == 0) {
-                errorMessages.put("firstNameError", "firstName can not be empty!");
+                errorMessages.put("firstNameError", "*firstName can not be empty!");
             }
 
             if (lastName == null || lastName.trim().length() == 0) {
-                errorMessages.put("lastNameError", "lastName can not be empty!");
+                errorMessages.put("lastNameError", "*lastName can not be empty!");
             }
 
             if (userName == null || userName.trim().length() == 0) {
-                errorMessages.put("userNameError", "userName can not be empty!");
+                errorMessages.put("userNameError", "*userName can not be empty!");
             }
 
-            if (errorMessages.size() == 0)
+            if (errorMessages.isEmpty())
             {
                 Player player = playerLogic.createEntity(request.getParameterMap());
                 playerLogic.add(player);
@@ -108,10 +63,12 @@ public class CreatePlayer extends HttpServlet {
                 username.setPlayer(player);
                 usernameLogic.add(username);
 
-                request.getRequestDispatcher("PlayerTableViewFancy").forward(request, response);
+                request.getRequestDispatcher("/jsp/PlayersTableView.jsp").forward(request, response);
             }
-            else
+            else {
+                request.setAttribute("errorMessages", errorMessages);
                 doGet(request, response);
+            }
         }
     }
 

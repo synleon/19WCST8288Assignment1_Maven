@@ -60,14 +60,14 @@
 </head>
 <body>
 <!-- https://www.w3schools.com/css/css_table.asp -->
-<form method="post">
+<form method="post" action="UsernameAction">
     <table align="center">
         <tr>
             <td><input type="text" name="searchText"/></td>
             <td><input type="submit" name="search" value="Search"/></td>
         </tr>
     </table>
-
+    <h3>List of Usernames</h3><br>
     <table align="center" border="1">
         <tr>
             <th><input type="submit" name="delete" value="Delete"/></th>
