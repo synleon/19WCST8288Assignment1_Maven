@@ -19,6 +19,14 @@ import java.util.List;
 import java.util.Map;
 
 public class TableAction extends HttpServlet {
+
+    /**
+     * Delete usernames according to user's selection
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void deleteUsernames(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UsernameLogic logic = new UsernameLogic();
@@ -30,6 +38,13 @@ public class TableAction extends HttpServlet {
 
     }
 
+    /**
+     * Delete Scores according to user's selection
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void deleteScores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ScoreLogic logic = new ScoreLogic();
@@ -40,6 +55,13 @@ public class TableAction extends HttpServlet {
         viewScores(request, response);
     }
 
+    /**
+     * Delete players according to user's selection
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void deletePlayers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PlayerLogic logic = new PlayerLogic();
@@ -50,7 +72,13 @@ public class TableAction extends HttpServlet {
         viewPlayers(request, response);
     }
 
-
+    /**
+     * Update single record of username
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void updateUsername(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -59,6 +87,13 @@ public class TableAction extends HttpServlet {
         viewUsernames(request, response);
     }
 
+    /**
+     * Update single record of score
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void updateScore(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -69,6 +104,13 @@ public class TableAction extends HttpServlet {
         viewScores(request, response);
     }
 
+    /**
+     * Update single record of player
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void updatePlayer(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Map<String, String[]> parameterMap = request.getParameterMap();
@@ -91,6 +133,13 @@ public class TableAction extends HttpServlet {
         // TODO: add search Player code here
     }
 
+    /**
+     * View players, redirect to corresponding JSP file after set entities as attribute
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void viewPlayers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PlayerLogic logic = new PlayerLogic();
@@ -99,6 +148,13 @@ public class TableAction extends HttpServlet {
         request.getRequestDispatcher("/jsp/PlayersTableView.jsp").forward(request, response);
     }
 
+    /**
+     * View usernames, redirect to corresponding JSP file after set entities as attribute
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void viewUsernames(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UsernameLogic logic = new UsernameLogic();
@@ -107,18 +163,25 @@ public class TableAction extends HttpServlet {
         request.getRequestDispatcher("/jsp/UsernameTableViewFancy.jsp").forward(request, response);
     }
 
+    /**
+     * View scores, redirect to corresponding JSP file after set entities as attribute
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void viewScores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ScoreLogic logic = new ScoreLogic();
         List<Score> entities = logic.getAll();
         request.setAttribute("entities", entities);
-
         request.getRequestDispatcher("/jsp/ScoresTableView.jsp").forward(request, response);
     }
 
 
     /**
      * Handles the HTTP <code>POST</code> method.
+     * Edit, Delete of Username/PLayer/Score will be handled
      *
      * @param request servlet request
      * @param response servlet response
@@ -145,7 +208,6 @@ public class TableAction extends HttpServlet {
             if (delete != null && delete.trim().length() != 0)
                 deleteUsernames(request, response);
             if (edit != null && edit.trim().length() != 0)
-
                 updateUsername(request, response);
             if (search != null && search.trim().length() != 0)
                 searchUsernames(request, response);
@@ -182,14 +244,6 @@ public class TableAction extends HttpServlet {
         if (url.matches(".*ViewScore.*")) {
             viewScores(request, response);
         }
-    }
-
-    /**
-     * Insert stylesheet link to output
-     * @param out PrinterWriter used for output
-     */
-    protected void applyStyleSheet(PrintWriter out) {
-        out.println("<link rel=\"stylesheet\" type=\"text/css\" href=\"css\\viewtable.css\">");
     }
 
     /**

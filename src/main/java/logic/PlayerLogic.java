@@ -20,6 +20,11 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
     public final static String EMAIL = "email";
     public final static String ID = "id";
 
+    public final static int MAXLEN_ID = 16;
+    public final static int MAXLEN_FIRSTNAME = 32;
+    public final static int MAXLEN_LASTNAME = 32;
+
+
     public PlayerLogic() {
         super(new PlayerDAO());
     }
@@ -86,17 +91,26 @@ public class PlayerLogic extends GenericLogic<Player, PlayerDAO> {
         if (playerid == null || playerid.length() == 0) {
             errorMessages.put("idError", "* id can not be empty!");
         }
+        else if (playerid.length() > MAXLEN_ID) {
+            errorMessages.put("idError", "* length of id can not exceed " + MAXLEN_ID);
+        }
 
         if (firstName == null || firstName.trim().length() == 0) {
             errorMessages.put("firstNameError", "* firstName can not be empty!");
+        }
+        else if (firstName.trim().length() > MAXLEN_FIRSTNAME) {
+            errorMessages.put("firstNameError", "* length of firstName can not exceed " + MAXLEN_FIRSTNAME);
         }
 
         if (lastName == null || lastName.trim().length() == 0) {
             errorMessages.put("lastNameError", "* lastName can not be empty!");
         }
+        else if (lastName.trim().length() > MAXLEN_LASTNAME) {
+            errorMessages.put("lastNameError", "* length of lastName can not exceed " + MAXLEN_LASTNAME);
+        }
 
         // valid email format x@x.xx "[a-zA-Z]\w*@\w+.[a-zA-Z]{2,4}"
-        if (email != null && !email.matches("[a-zA-Z]\\w*@\\w+.[a-zA-Z]{2,4}")) {
+        if (email != null && !email.trim().isEmpty() && !email.matches("[a-zA-Z]\\w*@\\w+.[a-zA-Z]{2,4}")) {
             errorMessages.put("emailError", "* email must be in x@x.xx format");
         }
 

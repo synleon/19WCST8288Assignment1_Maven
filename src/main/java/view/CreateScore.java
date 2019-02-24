@@ -2,6 +2,7 @@ package view;
 
 import entity.Player;
 import entity.Score;
+import logic.IllegalFormParameterException;
 import logic.PlayerLogic;
 import logic.ScoreLogic;
 
@@ -19,42 +20,34 @@ public class CreateScore extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if (request.getParameter("add") != null) {
-            Map<String, String> errorMessages = new HashMap<>();
-            String playeridInput = request.getParameter(ScoreLogic.PLAYER_ID);
-            String scoreInput = request.getParameter(ScoreLogic.SCORE);
-            if (playeridInput.isEmpty())
-                errorMessages.put("idError", "* player id can not be empty!");
-            if (scoreInput.isEmpty())
-                errorMessages.put("scoreError", "* Score can not be empty!");
+            ScoreLogic logic = new ScoreLogic();
+            Score score = null;
 
-            if (errorMessages.isEmpty()) {
-                ScoreLogic logic = new ScoreLogic();
-                Score score = logic.createEntity(request.getParameterMap());
-                Player player = new PlayerLogic().getPlayerWithId(Integer.valueOf(request.getParameter(ScoreLogic.PLAYER_ID)));
-                score.setPlayerid(player);
-                logic.add(score);
-                request.getRequestDispatcher("/jsp/ScoresTableView.jsp").forward(request, response);
+            try {
+                score = logic.createEntity(request.getParameterMap());
+
+            } catch (IllegalFormParameterException e) {
+                request.setAttribute("errorMessages", e.getErrorMessages());
+                doGet(request, response);
             }
-            else {
+
+            Player player = new PlayerLogic().getPlayerWithId(Integer.valueOf(request.getParameter(ScoreLogic.PLAYER_ID)));
+            if (player == null) {
+                // can not get the player with the input id
+                Map<String, String> errorMessages = new HashMap<>();
+                errorMessages.put("idError", "* can not find player with this id!");
                 request.setAttribute("errorMessages", errorMessages);
                 doGet(request, response);
             }
+
+            score.setPlayerid(player);
+            logic.add(score);
+            response.sendRedirect("ViewScore");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/jsp/CreateScore.jsp").forward(request, response);
-    }
-
-    private String toStringMap(Map<String, String[]> m) {
-        StringBuilder builder = new StringBuilder();
-        for (String k : m.keySet()) {
-            builder.append("Key=").append(k)
-                    .append(", ")
-                    .append("Value/s=").append(Arrays.toString(m.get(k)))
-                    .append(System.lineSeparator());
-        }
-        return builder.toString();
     }
 }

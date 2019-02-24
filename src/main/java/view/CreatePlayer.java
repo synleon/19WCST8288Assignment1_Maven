@@ -45,7 +45,7 @@ public class CreatePlayer extends HttpServlet {
             username.setPlayer(player);
             usernameLogic.add(username);
 
-            request.getRequestDispatcher("/jsp/PlayersTableView.jsp").forward(request, response);
+            response.sendRedirect("ViewPlayer");
 
         }
     }

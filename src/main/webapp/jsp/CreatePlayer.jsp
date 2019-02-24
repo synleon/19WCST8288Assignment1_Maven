@@ -25,9 +25,9 @@
             Last name:<br>
             <input type="text" name="lastName"><span class="error">${playerErrMessages.lastNameError}</span><br>
             Email:<br>
-            <input type="email" name="email"><br>
+            <input type="email" name="email"><span class="error">${playerErrMessages.emailError}</span><br><br>
             Username:<br>
-            <input type="text" name="username"><span class="error">${usernameErrMessages.userNameError}</span><br><br>
+            <input type="text" name="username"><span class="error">${usernameErrMessages.usernameError}</span><br><br>
             <input type="submit" name="add" value="Add and View">
         </form>
         <%--<pre><%=toStringMap(request.getParameterMap())%></pre>--%>

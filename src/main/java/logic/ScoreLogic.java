@@ -6,6 +6,7 @@ import entity.Score;
 import java.util.Date;
 import java.time.Clock;
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -16,6 +17,9 @@ public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
     public final static String PLAYER_ID = "id";
     public final static String SCORE = "score";
     public final static String SUBMISSION = "submission";
+
+    public final static int MAXLEN_ID = 16;
+    public final static int MAXLEN_SCORE = 16;
 
     public ScoreLogic() {
         super(new ScoreDAO());
@@ -66,12 +70,34 @@ public class ScoreLogic extends GenericLogic<Score, ScoreDAO> {
     }
 
     @Override
-    public Score createEntity(Map<String, String[]> parameterMap) {
-        Score score = new Score();
+    public Score createEntity(Map<String, String[]> parameterMap) throws IllegalFormParameterException{
+        Map<String, String> errorMessages = new HashMap<>();
+        String idInput = parameterMap.get(PLAYER_ID)[0];
+        String scoreInput = parameterMap.get(SCORE)[0];
 
-        score.setScore(Integer.valueOf(parameterMap.get(SCORE)[0]));
-        score.setSubmission(Date.from(Instant.now(Clock.systemDefaultZone())));
+        if (idInput == null || idInput.isEmpty()) {
+            errorMessages.put("idError", "* id can not be empty!");
+        }
+        else if (idInput.length() > MAXLEN_ID) {
+            errorMessages.put("idError", "* length of id can not be exceed " + MAXLEN_ID);
+        }
 
-        return score;
+        if (scoreInput == null || scoreInput.isEmpty())
+        {
+            errorMessages.put("scoreError", "* score can not be empty!");
+        }
+        else if (scoreInput.length() > MAXLEN_SCORE) {
+            errorMessages.put("scoreError", "* length of score can not exceed " + MAXLEN_SCORE);
+        }
+
+        if (errorMessages.isEmpty()) {
+            Score score = new Score();
+            score.setScore(Integer.valueOf(scoreInput));
+            score.setSubmission(Date.from(Instant.now(Clock.systemDefaultZone())));
+            return score;
+        }
+        else{
+            throw new IllegalFormParameterException(errorMessages);
+        }
     }
 }
