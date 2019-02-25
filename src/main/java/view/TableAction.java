@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Servlet to handle both viewing and editing of players, scores and usernames
+ * @author leon
+ */
 public class TableAction extends HttpServlet {
 
     /**
@@ -30,12 +32,15 @@ public class TableAction extends HttpServlet {
     protected void deleteUsernames(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UsernameLogic logic = new UsernameLogic();
+        // get all the rows that has been selected for deleting
         String[] values = request.getParameterValues("deleteMark");
-        if (values != null && values.length >= 1)
-            for (String value: values)
+        if (values != null && values.length >= 1) {
+            for (String value : values) {
                 logic.deleteUsernameWithPlayerId(Integer.valueOf(value));
+            }
+        }
+        // refresh view after deletion
         viewUsernames(request, response);
-
     }
 
     /**
@@ -48,10 +53,12 @@ public class TableAction extends HttpServlet {
     protected void deleteScores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ScoreLogic logic = new ScoreLogic();
+        // get all the rows that has been selected for deleting
         String[] values = request.getParameterValues("deleteMark");
         if (values != null && values.length >= 1)
             for (String value: values)
                 logic.deleteScoreWithId(Integer.valueOf(value));
+        // refresh view after deletion
         viewScores(request, response);
     }
 
@@ -65,10 +72,12 @@ public class TableAction extends HttpServlet {
     protected void deletePlayers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PlayerLogic logic = new PlayerLogic();
+        // get all the rows that has been selected for deleting
         String[] values = request.getParameterValues("deleteMark");
         if (values != null && values.length >= 1)
             for (String value: values)
                 logic.deletePlayerWithID(Integer.valueOf(value));
+        // refresh view after deletion
         viewPlayers(request, response);
     }
 
@@ -84,6 +93,7 @@ public class TableAction extends HttpServlet {
         Map<String, String[]> parameterMap = request.getParameterMap();
         UsernameLogic logic = new UsernameLogic();
         logic.updateUsernameWithPlayerId(parameterMap);
+        // refresh view after update
         viewUsernames(request, response);
     }
 
@@ -98,9 +108,8 @@ public class TableAction extends HttpServlet {
             throws ServletException, IOException {
         Map<String, String[]> parameterMap = request.getParameterMap();
         ScoreLogic logic = new ScoreLogic();
-
         logic.updateScoreWithID(parameterMap);
-
+        // refresh view after update
         viewScores(request, response);
     }
 
@@ -116,6 +125,7 @@ public class TableAction extends HttpServlet {
         Map<String, String[]> parameterMap = request.getParameterMap();
         PlayerLogic logic = new PlayerLogic();
         logic.updatePlayerWithID(parameterMap);
+        // refresh view after update
         viewPlayers(request, response);
     }
 
@@ -143,8 +153,14 @@ public class TableAction extends HttpServlet {
     protected void viewPlayers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PlayerLogic logic = new PlayerLogic();
+
+        // get all players needs to be displayed
         List<Player> entities = logic.getAllPlayers();
+
+        // send players to page
         request.setAttribute("entities", entities);
+
+        // forward to JSP page
         request.getRequestDispatcher("/jsp/PlayersTableView.jsp").forward(request, response);
     }
 
@@ -158,8 +174,14 @@ public class TableAction extends HttpServlet {
     protected void viewUsernames(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UsernameLogic logic = new UsernameLogic();
+
+        // get all usernames
         List<Username> entities = logic.getAll();
+
+        // set usernames to page
         request.setAttribute("entities", entities);
+
+        // forward to JSP page
         request.getRequestDispatcher("/jsp/UsernameTableViewFancy.jsp").forward(request, response);
     }
 
@@ -173,8 +195,14 @@ public class TableAction extends HttpServlet {
     protected void viewScores(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ScoreLogic logic = new ScoreLogic();
+
+        // get all scores
         List<Score> entities = logic.getAll();
+
+        // send scores to page
         request.setAttribute("entities", entities);
+
+        // forward to JSP page
         request.getRequestDispatcher("/jsp/ScoresTableView.jsp").forward(request, response);
     }
 
@@ -191,12 +219,17 @@ public class TableAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        // get requested URI
         String url = request.getRequestURI();
+
+        // get three kind of action
         String edit = request.getParameter("edit");
         String delete = request.getParameter("delete");
         String search = request.getParameter("search");
+
+        // determine the source of action by URI
         if (url.matches(".*PlayerAction.*")) {
+            // determine submission type, call method accordingly
             if (delete != null && delete.trim().length() != 0)
                 deletePlayers(request, response);
             if (edit != null && edit.trim().length() != 0)
@@ -205,6 +238,7 @@ public class TableAction extends HttpServlet {
                 searchPlayers(request, response);
         }
         if (url.matches(".*UsernameAction.*")) {
+            // determine submission type, call method accordingly
             if (delete != null && delete.trim().length() != 0)
                 deleteUsernames(request, response);
             if (edit != null && edit.trim().length() != 0)
@@ -213,6 +247,7 @@ public class TableAction extends HttpServlet {
                 searchUsernames(request, response);
         }
         if (url.matches(".*ScoreAction.*")) {
+            // determine submission type, call method accordingly
             if (delete != null && delete.trim().length() != 0)
                 deleteScores(request, response);
             if (edit != null && edit.trim().length() != 0)
@@ -234,7 +269,10 @@ public class TableAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // get requested URI
         String url = request.getRequestURI();
+
+        // determine the source of HTTP GET request and call view method accordingly
         if (url.matches(".*ViewPlayer.*")) {
             viewPlayers(request, response);
         }

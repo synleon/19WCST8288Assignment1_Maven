@@ -11,14 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Servlet to handle the creation of score from a JSP form CreateScore.jsp
+ * @author leon
+ */
 public class CreateScore extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // make sure user clicked add button
         if (request.getParameter("add") != null) {
             ScoreLogic logic = new ScoreLogic();
             Score score = null;
@@ -27,6 +30,7 @@ public class CreateScore extends HttpServlet {
                 score = logic.createEntity(request.getParameterMap());
 
             } catch (IllegalFormParameterException e) {
+                // input validation failed, set error messages and display
                 request.setAttribute("errorMessages", e.getErrorMessages());
                 doGet(request, response);
             }

@@ -6,22 +6,18 @@ import logic.IllegalFormParameterException;
 import logic.PlayerLogic;
 import logic.UsernameLogic;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
+/**
+ * Servlet to handle player create form CreatePlayer.jsp
+ * @author leon
+ */
 public class CreatePlayer extends HttpServlet {
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-    }
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // make sure user clicked add button
         if (request.getParameter("add") != null) {
             PlayerLogic playerLogic = new PlayerLogic();
 
@@ -29,6 +25,7 @@ public class CreatePlayer extends HttpServlet {
             try {
                 player = playerLogic.createEntity(request.getParameterMap());
             } catch (IllegalFormParameterException e) {
+                // user input validation failed, set error messages and display
                 request.setAttribute("playerErrMessages", e.getErrorMessages());
                 doGet(request, response);
             }
@@ -39,12 +36,14 @@ public class CreatePlayer extends HttpServlet {
             try {
                 username = usernameLogic.createEntity(request.getParameterMap());
             } catch (IllegalFormParameterException e) {
+                // user input validation failed, set error messages and display
                 request.setAttribute("usernameErrMessages", e.getErrorMessages());
                 doGet(request, response);
             }
             username.setPlayer(player);
             usernameLogic.add(username);
 
+            // after a successful creation, redirect user to player viewing page
             response.sendRedirect("ViewPlayer");
 
         }
@@ -53,15 +52,4 @@ public class CreatePlayer extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/jsp/CreatePlayer.jsp").forward(request, response);
     }
-
-//    private String toStringMap(Map<String, String[]> m) {
-//        StringBuilder builder = new StringBuilder();
-//        for (String k : m.keySet()) {
-//            builder.append("Key=").append(k)
-//                    .append(", ")
-//                    .append("Value/s=").append(Arrays.toString(m.get(k)))
-//                    .append(System.lineSeparator());
-//        }
-//        return builder.toString();
-//    }
 }

@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 
-// @WebServlet(name = "SampleForm", urlPatterns = "/SampleForm")
 public class SampleForm extends HttpServlet {
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
